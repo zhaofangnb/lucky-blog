@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,d as l}from"./app.008430f5.js";const A=JSON.parse('{"title":"求平方根","description":"","frontmatter":{},"headers":[],"relativePath":"interview/algorithm/sqrt.md","lastUpdated":null}'),p={name:"interview/algorithm/sqrt.md"},o=l("",2),t=[o];function e(c,r,y,F,D,i){return a(),n("div",null,t)}const d=s(p,[["render",e]]);export{A as __pageData,d as default};

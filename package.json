@@ -1,0 +1,56 @@
+{
+  "name": "lucky-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress serve docs",
+    "test": "vitest run",
+    "lint": "eslint --fix --ext .ts,.vue src",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.vue\"",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "Front-End",
+    "Blog",
+    "HTML5",
+    "CSS3",
+    "JavaScript",
+    "TypeScript",
+    "Vue2",
+    "Vue3",
+    "NodeJs",
+    "Webpack5",
+    "Vite",
+    "Electron",
+    "Nuxt3"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "17.0.2",
+    "@commitlint/config-conventional": "17.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.34.0",
+    "eslint-formatter-pretty": "^4.1.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
+    "husky": "^8.0.3",
+    "jsdom": "^21.1.0",
+    "prettier": "^2.8.4",
+    "terser": "5.4.0",
+    "typescript": "^4.9.5",
+    "vite": "3.0.7",
+    "vitepress": "1.0.0-alpha.46"
+  },
+  "dependencies": {
+    "vue": "3.2.37"
+  }
+}

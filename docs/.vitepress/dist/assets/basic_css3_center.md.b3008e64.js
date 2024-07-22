@@ -1,0 +1,15 @@
+import{_ as s,c as a,o as n,d as e}from"./app.008430f5.js";const f=JSON.parse('{"title":"css实现元素垂直水平居中","description":"","frontmatter":{},"headers":[{"level":2,"title":"flex布局(推荐)","slug":"flex布局-推荐","link":"#flex布局-推荐","children":[]},{"level":2,"title":"不知宽高 用定位 + transform","slug":"不知宽高-用定位-transform","link":"#不知宽高-用定位-transform","children":[]},{"level":2,"title":"已知宽高","slug":"已知宽高","link":"#已知宽高","children":[]}],"relativePath":"basic/css3/center.md","lastUpdated":null}'),l={name:"basic/css3/center.md"},t=e(`<h1 id="css实现元素垂直水平居中" tabindex="-1">css实现元素垂直水平居中 <a class="header-anchor" href="#css实现元素垂直水平居中" aria-hidden="true">#</a></h1><h2 id="flex布局-推荐" tabindex="-1">flex布局(推荐) <a class="header-anchor" href="#flex布局-推荐" aria-hidden="true">#</a></h2><div class="language-css"><button title="Copy Code" class="copy"></button><span class="lang">css</span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">    display: flex;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#FFCB6B;">justify-content</span><span style="color:#A6ACCD;">: center;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#FFCB6B;">align-items</span><span style="color:#A6ACCD;">: center;</span></span>
+<span class="line"></span></code></pre></div><h2 id="不知宽高-用定位-transform" tabindex="-1">不知宽高 用定位 + transform <a class="header-anchor" href="#不知宽高-用定位-transform" aria-hidden="true">#</a></h2><div class="language-css"><button title="Copy Code" class="copy"></button><span class="lang">css</span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">    position: absolute;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    top: 50%;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    left: 50%;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    transform: translate(-50%</span><span style="color:#89DDFF;">,</span><span style="color:#A6ACCD;">-50%);</span></span>
+<span class="line"></span></code></pre></div><h2 id="已知宽高" tabindex="-1">已知宽高 <a class="header-anchor" href="#已知宽高" aria-hidden="true">#</a></h2><div class="language-css"><button title="Copy Code" class="copy"></button><span class="lang">css</span><pre class="shiki material-theme-palenight" tabindex="0"><code><span class="line"><span style="color:#A6ACCD;">    background: green;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    width: 100px;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    height: 100px;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    position: absolute;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    top: 50%;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    left: 50%;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    margin: -50px 0 0 -50px;</span></span>
+<span class="line"></span></code></pre></div>`,7),p=[t];function c(o,r,i,d,h,C){return n(),a("div",null,p)}const y=s(l,[["render",c]]);export{f as __pageData,y as default};
