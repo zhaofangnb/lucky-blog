@@ -158,6 +158,26 @@ function sidebarAdvance() {
               text: '常用布局',
               link: '/advance/harmonyOs/layout',
             },
+            {
+              text: '渲染控制',
+              link: '/advance/harmonyOs/renderControl',
+            },
+            {
+              text: 'UI范式',
+              link: '/advance/harmonyOs/uiParadigm',
+            },
+            {
+              text: 'ArkTs高性能编程实践',
+              link: '/advance/harmonyOs/hignPerfermanceCode',
+            },
+            {
+              text: '状态管理',
+              link: '/advance/harmonyOs/stateManagement',
+            },
+            {
+              text: '资源分类与访问',
+              link: '/advance/harmonyOs/resourceCatagory',
+            },
           ],
         },
       ],

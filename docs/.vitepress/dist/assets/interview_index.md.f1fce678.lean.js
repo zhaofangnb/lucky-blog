@@ -1,1 +1,0 @@
-import{_ as e,c as i,o as t,d as a}from"./app.008430f5.js";const p=JSON.parse('{"title":"面试篇-快速入口","description":"","frontmatter":{},"headers":[],"relativePath":"interview/index.md","lastUpdated":null}'),l={name:"interview/index.md"},r=a("",2),n=[r];function o(c,s,_,d,h,u){return t(),i("div",null,n)}const v=e(l,[["render",o]]);export{p as __pageData,v as default};

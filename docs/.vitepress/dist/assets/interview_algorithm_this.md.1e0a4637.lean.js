@@ -1,1 +1,0 @@
-import{_ as s,c as n,o as a,d as l}from"./app.008430f5.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"interview/algorithm/this.md","lastUpdated":null}'),o={name:"interview/algorithm/this.md"},p=l("",2),e=[p];function t(c,r,F,y,D,A){return a(),n("div",null,e)}const _=s(o,[["render",t]]);export{i as __pageData,_ as default};

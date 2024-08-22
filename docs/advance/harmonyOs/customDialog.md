@@ -3,7 +3,7 @@
 ```bash
 @customDialog
 struct CustomDialogExample {
-    contriller: CustomDialogController = new CustomDialogController({
+    controler: CustomDialogController = new CustomDialogController({
         builder: CustomDialogExample((
             confirm: (value) => {
                 // 实现
@@ -31,13 +31,13 @@ struct CustomDialogExample {
             Row() {
                 Button('取消')
                 .onClick(() => {
-                    this.contriller.close();
-                    #  this.contriller.open();
+                    this.controler.close();
+                    #  this.controler.open();
                 })
                 Button('确认')
                 .onClick(() => {
                     this.confirm(this.value)；
-                    this.contriller.close();
+                    this.controler.close();
                 })
             }
         }

@@ -1,1 +1,0 @@
-import{_ as a,c as e,o as i,d as l}from"./app.008430f5.js";const f=JSON.parse('{"title":"入门篇-快速入口","description":"","frontmatter":{},"headers":[],"relativePath":"basic/index.md","lastUpdated":null}'),c={name:"basic/index.md"},t=l("",2),s=[t];function r(o,n,_,u,d,h){return i(),e("div",null,s)}const p=a(c,[["render",r]]);export{f as __pageData,p as default};

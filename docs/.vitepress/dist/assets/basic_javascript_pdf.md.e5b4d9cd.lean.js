@@ -1,1 +1,0 @@
-import{_ as s,c as n,o as a,d as l}from"./app.008430f5.js";const i=JSON.parse('{"title":"pdf","description":"","frontmatter":{},"headers":[],"relativePath":"basic/javascript/pdf.md","lastUpdated":null}'),p={name:"basic/javascript/pdf.md"},o=l("",12),t=[o];function e(c,F,y,r,D,C){return a(),n("div",null,t)}const f=s(p,[["render",e]]);export{i as __pageData,f as default};
