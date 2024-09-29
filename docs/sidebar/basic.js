@@ -168,6 +168,10 @@ function sidebarBasic() {
               text: '小程序性能',
               link: '/basic/wechat/performance',
             },
+            {
+              text: 'yto小程序实战',
+              link: '/basic/wechat/yto',
+            },
           ],
         },
         {

@@ -55,6 +55,14 @@ console.log(typeof People) // function class其实就是function的语法糖。
 使用class定义:
 ```ts
 class Animal {
+  type:string;
+  say: () => void;
+  constructor(type:string) {
+    this.type = type;
+    
+  }
+}
+class Animal {
     type: string;
     say: () => void;
     constructor (type: string) {
