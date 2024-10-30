@@ -78,7 +78,7 @@ const root = document.getElementById('root')!;
 ReactDOM.hydrateRoot(root, <App />);
 ```
 
-如果你的项目使用了`TypeScrip`t，最值得注意的变化是，现在在`定义props类型`时，如果需要`获取子组件children`，那么你需要`显式的定义它`:
+如果你的项目使用了`TypeScript`，最值得注意的变化是，现在在`定义props类型`时，如果需要`获取子组件children`，那么你需要`显式的定义它`:
 ```ts
 // React 17
 interface MyButtonProps {

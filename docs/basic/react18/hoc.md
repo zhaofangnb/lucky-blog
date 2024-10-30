@@ -91,6 +91,7 @@ export default App
 ### HOC模式
 
 ```js
+/** 高阶组件模式 */
 function HOC (Component) {
     return class wrapComponent extends React.Component {
         constructor () {
@@ -122,7 +123,34 @@ export default App
 ```
 
 ### 自定义hooks模式
-hooks的诞生，一大部分原因是`解决无状态组件没有state和逻辑难以复用问题`。hooks可以将一段逻辑封装起来，做到开箱即用
+hooks的诞生，一大部分原因是`解决无状态组件没有state和逻辑难以复用问题`。hooks可以将一段逻辑封装起来，做到开箱即用。
+
+const [xxx, ...] = useXXX(参数1，参数2...)
+```js
+import React, { useState } from 'react';
+
+function useFormatList (list) {
+    return list.map(item => item.toUpperCase());
+}
+
+function Index ({ list}) {
+    const [number, setNumber] = useState(0);
+    const newList = useFormatList(list);
+
+    return (
+        <div className="list">
+            {
+                newList.map(item => <div key={item}>{ item }</div>)
+            }
+        </div>
+        <div className="btn">
+            <button onClick={() =>  setNumber(number++)}>add</button>
+        </div>
+    )
+}
+
+export default Index
+```
 
 ## 高阶组件的使用的编写结构
 
@@ -156,8 +184,8 @@ class App extends React.Component {
 
  ```js
  function withRouter () {
-    return class wrapComponent extends React.Component{
-        /* 编写逻辑 */
+    return class wrapComponent extends React.Component {
+        /**编写逻辑 */
     }
  }
  ```
@@ -165,16 +193,28 @@ class App extends React.Component {
  2. 对于`需要参数的HOC，我们需要一层代理`，如下：
 
 ```js
-
 function connect (mapStateToProps) {
-     /* 接受第一个参数 */
-     return function connectdvance(wrapCompoent) {
-        /* 接受组件 */
-        return class WrapComponent extends React.Component { 
+    /**接收第一个参数 */
+    return function connectadvance(wrapComponent) {
+        /**接收组件 */
+        return class WrapComponet extends React.Component {
+            constructor (props) {
+                super(props);
+                this.state = {
+                    storeState: {
+                        value: 'initial value'
+                    }
+                }
+            }
 
+            render () {
+                const mappedProps = mapStateToProps(this.state.storeState);
+                return <WrapComponet {...this.props} {...mappedProps} />
+            }
         }
-     }
+    }
 }
+
 ```
 
 我们看出两种hoc模型很简单，对于代理函数，可能有一层，可能有很多层，不过不要怕，无论多少层本质上都是一样的，我们只需要一层一层剥离开，分析结构，整个hoc结构和脉络就会清晰可见。吃透hoc也就易如反掌。
@@ -186,15 +226,14 @@ function connect (mapStateToProps) {
 
  ```js
  function HOC (Component) {
-    return class wrapComponent extends React.Component {
+    return class wrapComponent extends Component {
         constructor () {
-            super()
+            super();
             this.state = {
-                name: '张三'
+                name: 'zhangsan'
             }
         }
-
-        render(){
+         render(){
            return <Component  { ...this.props } { ...this.state }  />
        }
     }
@@ -240,10 +279,13 @@ console.log(newApp.say) //无法继承静态属性， 打印为undefind
 ```
 
 ### 反向继承
-向继承和属性代理有一定的区别，在于`包装后的组件继承了业务组件本身`，所以我们我无须在去实例化我们的业务组件。当前高阶组件就是继承后，加强型的业务组件。这种方式类似于`组件的强化`。
+反向继承和属性代理有一定的区别，在于`包装后的组件继承了业务组件本身`，所以我们无须在去实例化我们的业务组件。当前高阶组件就是继承后，加强型的业务组件。这种方式类似于`组件的强化`。
 
 ```js
 class App extends React.Component{
+  componntDidMount () {
+    console.log('componentDidMount')
+  }
   render(){
     return <div> hello,world  </div>
   }
@@ -252,7 +294,14 @@ class App extends React.Component{
 function HOC(Component){
     return class wrapComponent extends Component{
          /* 直接继承需要包装的组件 */
+         componentDidMount () {
+            console.log(`Component ${Component.name} mounted`);
+            super.componentDidMount();
+         }
 
+         render () {
+            return super.render();
+         }
     }
 }
 
@@ -267,6 +316,9 @@ export default HOC(App)
 function HOC(Component) {
   return class wrapComponent extends Component{
      /* 直接继承需要包装的组件 */
+     render () {
+        return super.render();
+     }
   }
 }
 
@@ -299,19 +351,21 @@ console.log(newApp.say)
 
  [有状态组件（属性代理）]
  ```js
-function classHOC(WrapComponent) {
-     return class Index extends React.Component {
+ function classHOC (Component) {
+    return class wrapComponent extends React.Component {
         state = {
             name: '张三'
         }
         componentDidMount() {
             console.log('HOC')
         }
+
         render () {
-            return <WrapComponent {...this.props} {...this.state} />
+            return <Component {...this.props} {...this.state} />
         }
-     }
-}
+    }
+ }
+
 
 function Index (props) {
     const { name } = props
@@ -327,15 +381,16 @@ function Index (props) {
 export default classHOC(Index)
  ```
 
- [同样也适用于无状态组件]
+ [同样也适用于无状态函数组件]
 
  ```js
-function functionHOC (WrapComponent) {
-    return function Index (props) {
+ function functionHOC (Component) {
+    return function wrapComponent (props) {
         const [state, setState] = useState({ name: '张三'})
-        return <WrapComponent {...props} {...state} /> 
+        return <Component  {...props} {...state} />
     }
-}
+ }
+
  ```
 + 抽离state控制更新
 ```js
@@ -495,6 +550,19 @@ export default () => {
 **`3.进阶: 异步组件(懒加载)`**
 ```js
 /**路由懒加载HOC */
+export default function LazyLoadRouter (loadRouter) {
+    return  function Content (props) {
+        const [Component, setComponent] = useState(null)
+        useEffect(() => {
+            loadRouter()
+            .then(module => setComponent(module.default))
+            .then(Component => setComponent(Component))
+        }, [])
+        return Component ? <Component {...props} /> : null
+    }
+}
+const Index = LazyLoadRouter(() => import('../pages/index')
+
  export default function AsyncRouter (loadRouter) {
     return class Content extends React.Component {
         state = { Component: null }
@@ -511,7 +579,7 @@ export default () => {
     }
  }
 
- const Index = Async(() => import('../pages/index'))
+ const Index = AsyncRouter(() => import('../pages/index'))
 ```
 
 
@@ -664,5 +732,68 @@ export default () => {
             <button onClick={() =>setNum2(num2+1) }>num2++</div>
         </div>
     )
+}
+```
+
++ 3.3 赋能组件
+
+[通过劫持原型-劫持生命周期]
+```js
+function HOC (Component) {
+    const cdm = Component.prototype.componentDidMount;
+    // 属性代理
+    Component.prototype.componentDidMount = function () {
+        console.log('属性代理劫持生命周期componentDidMount');
+        if (cdm) cdm.call(this);
+    }
+    return class wrapComponent extends React.Componet {
+        render () {
+            return <Component {...this.props} />
+        }
+    }
+
+    // 反向代理
+    return class wrapComponent extends Component {
+        componentDidMount() {
+            console.log('反向代理劫持生命周期componentDidMount');
+            if (cdm) cdm.apply(this);
+        }
+        render () {
+            return super.render();
+        }
+    }
+
+
+    @HOC
+    class Index extends React.Component{
+        componentDidMount(){
+            console.log('———didMounted———')
+        }
+        render(){
+            return <div>hello,world</div>
+        }
+    }
+}
+export default Index
+// 先打印 属性代理劫持生命周期componentDidMount
+// 后打印 ———didMounted———
+```
+
+[劫持事件监听]
+```js
+function ClickHoc (Component) {
+    return function wrap (props) {
+        const dom = useRef(null);
+
+        useEffect(() => {
+            const handleClick = () => {
+                console.log('劫持事件监听');
+            }
+            dom.current.addEventListener('click', handleClick);
+            return () => dom.current.removeEventListener('click', handleClick);
+        }, [])
+
+        return <Component {...props} ref={dom} />
+    }
 }
 ```

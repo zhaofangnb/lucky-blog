@@ -178,6 +178,14 @@ function sidebarAdvance() {
               text: '资源分类与访问',
               link: '/advance/harmonyOs/resourceCatagory',
             },
+            {
+              text: '一次开发，多端部署',
+              link: '/advance/harmonyOs/oneToMore',
+            },
+            {
+              text: '自由流转',
+              link: '/advance/harmonyOs/freeCirculation',
+            },
           ],
         },
       ],

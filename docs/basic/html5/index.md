@@ -309,6 +309,41 @@ localStorage常用于存储不易变动的数据，减轻服务器压力
 
 sessionStorage可以用来监测用户是否是刷新进入页面，如音乐播放器恢复进度条功能
 
+```js
+// 面试官提出的问题: 假设localStorage存储的数据过期了，怎么清除数据
+
+// 解决思路: 在存储数据时同时保存一个时间戳，并在读取数据时检查该时间戳，如果数据已经过期，则清除它。
+
+function setItemWithExpire(key, value, expireMinutes) {
+    const now = new Date();
+    const expiryTime = now.getTime() + (expireMinutes * 60 * 1000); // 转换为毫秒
+    localStorage.setItem(key, JSON.stringify({ value, expiryTime }));
+}
+
+function getItemWithExpire(key) {
+    const item = localStorage.getItem(key);
+    if(!item) return null;
+    try {
+        const { value, expiryTime } = JSON.parse(item);
+        if(expiryTime > new Date().getTime()) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return value;
+    } catch (e) {
+        return null;
+    }
+}
+
+// 调用示例
+// 存储数据，设置过期时间为10分钟
+setItemWithExpiry('myKey', 'myValue', 10);
+
+// 读取数据（如果数据未过期，则返回'myValue'；否则返回null并清除数据）
+const value = getItemWithExpiry('myKey');
+console.log(value); // 'myValue' 或 null（取决于是否已过期）
+```
+
 ### 2.10 WebSocket
 WebSocket是HTML5开始提供的一种在`单个TCP 连接`上进行`全双工通讯`的协议。
 

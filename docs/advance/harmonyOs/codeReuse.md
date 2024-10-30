@@ -11,7 +11,7 @@
 struct MyPage {
     build () {
         Column() {
-            Row({ space: 50}) {
+            Row({ space: 50 }) {
                 Button('确认')
                 .type(ButtonType.Normal)
                 .backGroundColor(Color.Green)
