@@ -6,6 +6,49 @@ function sidebarInterview() {
       collapsed: false, // 初始加载页面时关闭
       items: [
         {
+          text: 'html面试题',
+          items: [
+            {
+              text: 'html',
+              link: '/interview/html/',
+            },
+          ],
+        },
+        {
+          text: 'js面试题',
+          items: [
+            {
+              text: 'js',
+              link: '/interview/js/',
+            },
+            {
+              text: 'js数据类型',
+              link: '/interview/js/dataType',
+            },
+            {
+              text: 'eventLoop事件循环',
+              link: '/interview/js/eventLoop',
+            },
+            {
+              text: '垃圾回收',
+              link: '/interview/js/garbageCollection',
+            },
+            {
+              text: 'new关键字原理',
+              link: '/interview/js/new',
+            },
+          ],
+        },
+        {
+          text: 'css面试题',
+          items: [
+            {
+              text: 'css',
+              link: '/interview/css/',
+            },
+          ],
+        },
+        {
           text: '算法',
           items: [
             {

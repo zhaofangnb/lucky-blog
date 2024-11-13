@@ -735,7 +735,7 @@ export default () => {
 }
 ```
 
-+ 3.3 赋能组件
+### 赋能组件
 
 [通过劫持原型-劫持生命周期]
 ```js
@@ -795,5 +795,229 @@ function ClickHoc (Component) {
 
         return <Component {...props} ref={dom} />
     }
+}
+```
+
+
+[ref助力操控组件实例]
+`class`声明的有状态组件才有实例，`function`声明的无状态组件不存在实例。
+
+```js
+// 省略
+```
+
+## 实例
+`withRouter`强化props,把Router相关的状态都混入到props中
+
+```tsx
+function withRouter (Component) {
+    const displayName = `withRouter(${Component.displayName || Component.name})`;
+    const Comp = (props) => {
+        const {wrappedComponentRef, ...remainingProps} = props;
+
+        return (
+            // 从存放整个route对象上下文的RouterContext取出route对象,然后混入到原始组件的props
+            <RouterContext.Consumer>
+                {
+                    context => {
+                        return (
+                            <Component
+                              {...remainingProps}
+                              {...context}
+                              ref={wrappedComponentRef}
+                            />
+                        )
+                    }
+                }
+            </RouterContext.Consumer>
+        )
+    }
+    Comp.displayName = displayName;
+    Comp.WrappedComponent = Component;
+      /* 继承静态属性 */
+    return hoistStatics(C, Component);
+}
+export default withRouter
+```
+
+`控制渲染connect`
+
+```tsx
+import { useContext } from 'react'; 
+import store from './redux/store';
+import { ReactReduxContext } from './Context';
+
+function connect(mapStateToProps){
+   /* 第一层： 接收订阅state函数 */
+    return function wrapWithConnect (WrappedComponent){
+        /* 第二层：接收原始组件 */
+        function ConnectFunction(props){
+            const [ , forceUpdate ] = useState(0)
+            const { reactReduxForwardedRef ,...wrapperProps } = props
+            
+            /* 取出Context */
+            const { store } = useContext(ReactReduxContext)
+
+            /* 强化props：合并 store state 和 props  */
+            const trueComponentProps = useMemo(()=>{
+                  /* 只有props或者订阅的state变化，才返回合并后的props */
+                 return selectorFactory(mapStateToProps(store.getState()),wrapperProps) 
+            },[ store , wrapperProps ])
+
+            /* 只有 trueComponentProps 改变时候,更新组件。  */
+            const renderedWrappedComponent = useMemo(
+              () => (
+                <WrappedComponent
+                  {...trueComponentProps}
+                  ref={reactReduxForwardedRef}
+                />
+              ),
+              [reactReduxForwardedRef, WrappedComponent, trueComponentProps]
+            )
+            useEffect(()=>{
+              /* 订阅更新 */
+               const checkUpdate = () => forceUpdate(new Date().getTime())
+               store.subscribe( checkUpdate )
+            },[ store ])
+            return renderedWrappedComponent
+        }
+        /* React.memo 包裹  */
+        const Connect = React.memo(ConnectFunction)
+
+        /* 处理hoc,获取ref问题 */  
+        if(forwardRef){
+          const forwarded = React.forwardRef(function forwardConnectRef( props,ref) {
+            return <Connect {...props} reactReduxForwardedRef={ref} reactReduxForwardedRef={ref} />
+          })
+          return hoistStatics(forwarded, WrappedComponent)
+        } 
+        /* 继承静态属性 */
+        return hoistStatics(Connect,WrappedComponent)
+    } 
+}
+export default Index
+```
+
+`组件赋能` 缓存生命周期
+
+```tsx
+import React   from 'react'
+import { keepaliveLifeCycle } from 'react-keepalive-router'
+
+@keepaliveLifeCycle
+class Index extends React.Component<any,any> {
+    state={
+        activedNumber: 0,
+        unActivedNumber: 0
+    }
+    // 缓存路由组件激活时候用，初始化的时候会默认执行一次
+    actived(){
+        this.setState({
+            activedNumber: this.state.activedNumber + 1
+        })
+    }
+    // 路由组件缓存完成后调用
+    unActived(){
+        this.setState({
+            unActivedNumber: this.state.unActivedNumber + 1
+        })
+    }
+    render () {
+        const { activedNumber , unActivedNumber } = this.state
+        return (
+            <div  style={{ marginTop :'50px' }}>
+            <div> 页面 actived 次数： {{ activedNumber }} </div>
+            <div> 页面 unActived 次数：{{ unActivedNumber }} </div>
+            </div>
+        )
+    }
+}
+export default Index
+```
+
+```tsx
+// 实现
+import { lifeCycles } from '../core/keeper';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
+function keepaliveLifeCycle (Component) {
+    class Hoc extends React.Component {
+        cur = null;
+        handerLifeCycle = type => {
+           if (!this.cur) return;
+           const lifeCycleFunc = this.cur[type];
+           isFunction(lifeCycleFunc) && lifeCycleFunc.call(this.cur);
+        }
+        componentDidMount () {
+            const { cacheId } = this.props;
+            cacheId && (lifeCycles[cacheId] = this.handerLifeCycle);
+        }
+        componentWillUnmount () {
+            const { cacheId } = this.props;
+            delete lifeCycles[cacheId];
+        }
+
+        render = () => <Component { ...this.props } ref={ cur => (this.cur = cur)} />
+    }
+     return hoistNonReactStatic(Hoc, Component);
+}
+```
+
+## 高端组件HOC注意事项
+```tsx
+function HOC(Component) {
+  class WrappedComponent extends React.Component {
+      /*...*/
+  }
+  // 必须准确知道应该拷贝哪些方法 
+  WrappedComponent.staticMethod = Component.staticMethod
+  return WrappedComponent
+}
+```
+
++ 谨慎修改原型链，利用原型链修改组件生命周期，多个修改会失效。
++ 静态属性如果不继承就会丢失
++ 手动继承必须知道那些方法
++ forwardRef跨层级捕获ref
+
+```tsx
+/**
+ * 
+ * @param {*} Component 原始组件
+ * @param {*} isRef  是否开启ref模式
+ */
+function HOC(Component, isRef) {
+  class Wrap extends React.Component {
+     render(){
+        const { forwardedRef , ...otherprops  } = this.props;
+        return <Component ref={ forwardedRef }  {...otherprops}  />
+     }
+  }
+    if(isRef){
+      return React.forwardRef((props, ref)=> <Wrap forwardedRef={ ref } {...props} /> )
+    }
+    return Wrap;
+}
+
+class Index extends React.Component{
+  componentDidMount(){
+      console.log(666)
+  }
+  render(){
+    return <div>hello,world</div>
+  }
+}
+
+const HocIndex =  HOC(Index,true);
+
+export default () => {
+    // 1. 定义ref
+  const node = useRef(null);
+  useEffect(() => {
+     /* 就可以跨层级，捕获到 Index 组件的实例了 */ 
+    console.log(node.current.componentDidMount);
+  },[]);
+  // 2. 传入HOC组件的ref
+  return <div><HocIndex ref={ node }  /></div>
 }
 ```

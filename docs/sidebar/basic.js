@@ -135,6 +135,10 @@ function sidebarBasic() {
               text: 'Hooks',
               link: '/basic/react18/hooks',
             },
+            {
+              text: 'react设计模式',
+              link: '/basic/react18/design',
+            },
           ],
         },
         {
