@@ -37,6 +37,10 @@ function sidebarInterview() {
               text: 'new关键字原理',
               link: '/interview/js/new',
             },
+            {
+              text: 'js原型',
+              link: '/interview/js/prototype',
+            },
           ],
         },
         {
