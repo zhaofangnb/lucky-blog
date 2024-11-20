@@ -3,14 +3,14 @@
 ## 语义化标签
 使`HTML代码更加清晰和易于理解，同时也有助于提高网站的可访问性和搜索引擎排名`。在编写HTML代码时，应尽可能使用这些标签来描述页面的结构和内容。
 
-+ <header>: 页眉
-+ <nav> : 导航链接
-+ <section> : 页面内容
-+ <main> : 主要内容
-+ <article> : 文章内容
-+ <aside> : 侧边栏内容
-+ <footer> : 页脚
-+ <figure>和<figcaption>: <figure> 用于包含图像、图表等媒体内容，而 <figcaption> 则用于为这些媒体内容提供标题或说明。
++ `<header>`: 页眉
++ `<nav>` : 导航链接
++ `<section>` : 页面内容
++ `<main>` : 主要内容
++ `<article>` : 文章内容
++ `<aside>` : 侧边栏内容
++ `<footer>` : 页脚
++ `<figure>`和`<figcaption>`: `<figure>` 用于包含图像、图表等媒体内容，而 `<figcaption>` 则用于为这些媒体内容提供标题或说明。
 
 
 > 对SEO的影响:

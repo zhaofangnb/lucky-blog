@@ -41,6 +41,10 @@ function sidebarInterview() {
               text: 'js原型',
               link: '/interview/js/prototype',
             },
+            {
+              text: 'js继承方式',
+              link: '/interview/js/extends',
+            },
           ],
         },
         {
