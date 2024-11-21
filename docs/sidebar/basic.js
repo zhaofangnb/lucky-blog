@@ -204,6 +204,15 @@ function sidebarBasic() {
             },
           ],
         },
+        {
+          text: '电',
+          items: [
+            {
+              text: '电力基础知识',
+              link: '/basic/electric/',
+            },
+          ],
+        },
       ],
     },
   ]
